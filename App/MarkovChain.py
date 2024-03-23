@@ -62,6 +62,14 @@ class MarkovChainMelodyGenerator:
                 continue
             self._increment_initial_probability_count(note)
         self._normalize_initial_probabilities()
+        
+    def saveProbabilities(self, n, probabilities):
+        if sum(probabilities) != 1:
+            #make this a boolean and return false so that application can print a messag
+            return
+        if n == 12:
+            self.initial_probabilities = probabilities
+        
 
     def _increment_initial_probability_count(self, note):
         """
