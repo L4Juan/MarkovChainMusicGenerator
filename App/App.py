@@ -41,12 +41,10 @@ class MarkovChainGUI:
             return
 
         sumNewProbabilities=0
-           
         if self.radioVar.get() == 12:
             thisProbabilities = self.model.initial_probabilities
         else:
             thisProbabilities = self.model.get_transition_probabilities(self.radioVar.get())
-
             
         for txtBox in self.txtBoxes:
             if len(txtBox.get()):
@@ -69,17 +67,17 @@ class MarkovChainGUI:
         sum2=0
         for p in thisProbabilities:
             sum2+=p
-        print(sum2)
+        
+        #even out the tini decimal that sometimes doesnt add up
         if sum2 != 0:
             for i in range(12):
                 if thisProbabilities[i] > 0:
+                    #Sum to first non empty probability so that 0 prob numbers cannot happen
                     thisProbabilities[i] += 1 - sum2
                     break
-        sum2=0
-        for p in thisProbabilities:
-            sum2+=p
-        print(sum2)
+
         #save values
+        self.model.saveProbabilities(self.radioVar.get(), thisProbabilities)
         #check values will be used for next generaaation
     
     def _show_initial_probabilities(self):
